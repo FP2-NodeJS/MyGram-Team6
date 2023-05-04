@@ -1,21 +1,16 @@
 const express = require('express')
 const app = express()
-const {User} = require("../models")
+const userController = require('../controllers/usersController');
+const authentication = require("../middlewares/authentication")
 
-app.post('/login', (req,res)=>{
-    console.log('login user');
-})
+app.post('/login', userController.login)
 
-app.post('/register', (req,res)=>{
-    console.log('register user');
-})
+app.post('/register', userController.register)
 
-app.put('/:userId', (req,res)=>{
-    console.log('edit user');
-})
+app.use(authentication)
 
-app.delete('/:userId', (req,res)=>{
-    console.log('delete user');
-})
+app.put('/:id', userController.updateUser)
+
+app.delete('/:id', userController.deleteUser)
 
 module.exports = app
