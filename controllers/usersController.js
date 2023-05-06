@@ -18,8 +18,8 @@ class userController{
             } = req.body
 
             const data = await User.create({
-                full_name,
                 email,
+                full_name,
                 username,
                 password,
                 profile_image_url,
@@ -30,9 +30,8 @@ class userController{
         
               const response = {
                 user: {
-                    id: data.id,
-                    full_name: data.full_name,
                     email: data.email,
+                    full_name,
                     username: data.username,
                     profile_image_url: data.profile_image_url,
                     age: data.age,
@@ -109,8 +108,8 @@ class userController{
             
             const data = await User.findByPk(id)
 
-        if(data === req.userData){
-            const result = await User.update({
+        if(data[0] === req.UserData[0]){
+            await User.update({
                 full_name,
                 email,
                 username,
@@ -123,7 +122,19 @@ class userController{
             },
             returning: true
         })
-            res.status(201).json(result)
+
+        const response = {
+            user: {
+            email,
+            full_name, 
+            username, 
+            profile_image_url, 
+            age, 
+            phone_number
+            }
+             
+        }
+            res.status(201).json(response)
         }else{
             throw{
                 code: 401,

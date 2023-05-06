@@ -4,9 +4,9 @@ const { verifyToken } = require("../helpers/jwt")
 const authentication = async (req, res, next) => {
   try {
     // cheack header, ada access token?
-    const { access_token } = req.headers
+    const { token } = req.headers
 
-    if (!access_token) {
+    if (!token) {
       throw {
         code: 401,
         message: "Token not provided!"
@@ -14,7 +14,7 @@ const authentication = async (req, res, next) => {
     }
 
     // verify token
-    const decode = verifyToken(access_token)
+    const decode = verifyToken(token)
 
 
     const user = await User.findOne({
