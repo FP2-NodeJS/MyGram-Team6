@@ -1,20 +1,11 @@
 const express = require('express')
-const app = express()
+const app = express.Router()
+const PhotoController = require('../controllers/photosController')
+const authentication = require('../middlewares/authentication')
 
-app.get('/', (req,res)=>{
-    console.log('get all photos');
-})
-
-app.post('/', (req,res)=>{
-    console.log('add photos');
-})
-
-app.put('/:photoId', (req,res)=>{
-    console.log('edit photos');
-})
-
-app.delete('/:photoId', (req,res)=>{
-    console.log('delete photos');
-})
+app.post('/', PhotoController.createPhoto)
+app.get('/', PhotoController.getPhotos)
+app.put('/:photoId', PhotoController.updatePhotoById)
+app.delete('/:photoId', PhotoController.deletePhotoById)
 
 module.exports = app

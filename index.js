@@ -3,9 +3,10 @@ const express = require('express')
 const app = express()
 const PORT = process.env.PORT
 const route = require('./routers/route')
+const config = require("./config/config")
 
 app.use(express.json())
-// app.use(express.urlencoded())
+app.use(express.urlencoded({extended:true}))
 
 app.use(route)
 

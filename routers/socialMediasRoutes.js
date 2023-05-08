@@ -1,20 +1,13 @@
 const express = require('express')
 const app = express()
+const SosMedController = require('../controllers/sosmedController')
 
-app.get('/', (req,res)=>{
-    console.log('get social media');
-})
+app.get('/', SosMedController.GetAllSocialMedia)
 
-app.post('/', (req,res)=>{
-    console.log('add social media');
-})
+app.post('/', SosMedController.AddSocialMedia)
 
-app.put('/:socialMediaId', (req,res)=>{
-    console.log('edit social media');
-})
+app.put('/:socialMediaId', SosMedController.EditSocialMedia)
 
-app.delete('/:socialMediaId', (req,res)=>{
-    console.log('delete social media');
-})
+app.delete('/:socialMediaId', SosMedController.DeleteSocialMedia)
 
 module.exports = app
