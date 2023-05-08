@@ -158,12 +158,12 @@ class photoController {
             })
 
             // Kak ini kenapa gk bisa ya? Padahal pas dlu pertemuan latihan bisa. Alhasil pake yang ada diatas kak
-            // if (!response) {
-            //     throw {
-            //         code: 404,
-            //         message: "Photo not found!"
-            //     }
-            // }
+            if (!response) {
+                throw {
+                    code: 404,
+                    message: "Photo not found!"
+                }
+            }
 
             res.status(200).json({ message: "Your photo has been successfully deleted" })
         } catch (error) {

@@ -82,10 +82,10 @@ class userController{
               username: user.username
             }
       
-            const access_token = generateToken(response)
+            const token = generateToken(response)
       
             res.status(200).json({
-              access_token
+              token
             })
       
           } catch (error) {
@@ -107,7 +107,6 @@ class userController{
             } = req.body
             
             const data = await User.findByPk(id)
-
         if(data[0] === req.UserData[0]){
             await User.update({
                 full_name,
@@ -152,7 +151,7 @@ class userController{
             const { id } = req.params
             const data = await User.findByPk(id)
 
-        if(data === req.userData){
+        if(data[0] === req.UserData[0]){
             const result = await User.destroy({
                 where : { id }
             })
