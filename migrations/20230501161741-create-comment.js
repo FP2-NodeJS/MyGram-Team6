@@ -12,7 +12,7 @@ module.exports = {
       UserId: {
         type: Sequelize.INTEGER
       },
-      PhotoID: {
+      PhotoId: {
         type: Sequelize.INTEGER
       },
       comment: {

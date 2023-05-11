@@ -1,20 +1,13 @@
 const express = require('express')
 const app = express()
+const commentCtr = require('../controllers/commentController')
 
-app.get('/', (req,res)=>{
-    console.log('get comment');
-})
+app.get('/', commentCtr.showComment)
 
-app.post('/', (req,res)=>{
-    console.log('add comment');
-})
+app.post('/', commentCtr.AddComment)
 
-app.put('/:commentId', (req,res)=>{
-    console.log('edit comment');
-})
+app.put('/:commentId', commentCtr.EditComment)
 
-app.delete('/:commentId', (req,res)=>{
-    console.log('delete comment');
-})
+app.delete('/:commentId',commentCtr.DeleteComment)
 
 module.exports = app

@@ -41,7 +41,7 @@ module.exports = {
     })
 
     await queryInterface.addConstraint("Comments", {
-      fields: ["PhotoID"],
+      fields: ["PhotoId"],
       type: "foreign key",
       name: "photoID_fk",
       references: {

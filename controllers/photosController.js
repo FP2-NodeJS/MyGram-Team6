@@ -1,7 +1,7 @@
 const {
     Photo,
     User
-    // ,Comment 
+    ,Comment 
 } = require('../models')
 
 class photoController {
@@ -11,17 +11,17 @@ class photoController {
             const { id } = req.UserData
             const response = await Photo.findAll({
                 where: {
-                    UserId: id
+                    UserId : id
                 },
                 include: [
-                    // {
-                    //     model: Comment,
-                    //     attributes: ['comment'],
-                    //     include: {
-                    //         model: User,
-                    //         attributes: ['username']
-                    //     }
-                    // },
+                    {
+                        model: Comment,
+                        attributes: ['comment'],
+                        include: [{
+                            model: User,
+                            attributes: ['username']
+                        }]
+                    },
                     {
                         model: User,
                         attributes: ['id', 'username', 'profile_image_url']
@@ -142,29 +142,6 @@ class photoController {
                     message: "Photo not Found!"
                 }
             }
-
-            // Verifikasi Account
-            if (checkPhoto.UserId !== userId) {
-                throw {
-                    code: 403,
-                    message: "You are not allowed to access this data!"
-                }
-            }
-
-            const response = await Photo.destroy({
-                where: {
-                    id: photoId
-                }
-            })
-
-            // Kak ini kenapa gk bisa ya? Padahal pas dlu pertemuan latihan bisa. Alhasil pake yang ada diatas kak
-            if (!response) {
-                throw {
-                    code: 404,
-                    message: "Photo not found!"
-                }
-            }
-
             res.status(200).json({ message: "Your photo has been successfully deleted" })
         } catch (error) {
             res.status(error?.code || 500).json(error)
