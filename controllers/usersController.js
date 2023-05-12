@@ -106,8 +106,6 @@ class userController{
                 phone_number
             } = req.body
             
-            const data = await User.findByPk(id)
-        if(data[0] === req.UserData[0]){
             await User.update({
                 full_name,
                 email,
@@ -118,30 +116,28 @@ class userController{
             }, {
                 where: {
                     id
-            },
-            returning: true
-        })
-
-        const response = {
-            user: {
-            email,
-            full_name, 
-            username, 
-            profile_image_url, 
-            age, 
-            phone_number
-            }
-             
-        }
-            res.status(201).json(response)
-        }else{
-            throw{
-                code: 401,
-                message: "unauthorized"
-            }
-        }
-            } catch (error) {
-                res.status(error?.code || 500).json(error)
+                },
+                returning: true
+            }).then((result) => {
+                const response = {
+                    user: {
+                        email : result[1][0].email,
+                        full_name : result[1][0].full_name, 
+                        username : result[1][0].username, 
+                        profile_image_url : result[1][0].profile_image_url, 
+                        age: result[1][0].age, 
+                        phone_number: result[1][0].phone_number
+                    }
+                }
+                res.status(201).json(response)
+            }).catch((err) => {
+                throw{
+                    code: 400,
+                    message: err
+                }
+            });
+        } catch (error) {
+            res.status(error?.code || 500).json(error)
         }
     
     }
@@ -149,13 +145,9 @@ class userController{
     static async deleteUser(req, res){
         try {
             const { id } = req.params
-            const data = await User.findByPk(id)
-
-        if(data[0] === req.UserData[0]){
             const result = await User.destroy({
                 where : { id }
             })
-
             if(!result) {
                 throw {
                     code: 404,
@@ -163,12 +155,7 @@ class userController{
                 }
             }
             res.status(201).json({"message":"your account has sucessfully deleted"})
-        }else{
-            throw{
-                code: 401,
-                message: "unauthorized"
-            }
-        }
+        
         } catch (error) {
             res.status(error?.code || 500).json(error)
         }

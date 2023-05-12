@@ -70,22 +70,6 @@ class photoController {
     static async updatePhotoById(req, res) {
         try {
             const photoId = req.params.photoId
-            const { id: userId } = req.UserData
-
-            const checkPhoto = await Photo.findOne({
-                where: {
-                    id: photoId
-                }
-            })
-
-            // Verifikasi Account
-            if (checkPhoto.UserId !== userId) {
-                throw {
-                    code: 403,
-                    message: "You are forbidden to access this data!"
-                }
-            }
-
             const {
                 title,
                 caption,
@@ -106,17 +90,6 @@ class photoController {
             if (rowCount === 0) {
                 return res.status(404).json({ message: 'Photo not Found!' });
             }
-
-            const response = {
-                id: data.id,
-                poster_image_url: data.poster_image_url,
-                title: data.title,
-                caption: data.caption,
-                UserId: data.UserId,
-                createdAt: Date(),
-                updatedAt: Date()
-            }
-
             res.status(200).json({ photo: data })
         } catch (error) {
             res.status(error?.code || 500).json(error)
@@ -128,21 +101,17 @@ class photoController {
 
         try {
             const photoId = req.params.photoId
-            const { id: userId } = req.UserData
-
-            const checkPhoto = await Photo.findOne({
-                where: {
-                    id: photoId
+            await Photo.destroy({
+                where:{
+                    id:photoId
                 }
             })
-
-            if (!checkPhoto) {
-                throw {
-                    code: 404,
-                    message: "Photo not Found!"
-                }
-            }
-            res.status(200).json({ message: "Your photo has been successfully deleted" })
+            .then((result) => {
+                res.status(200).json({ message: "Your photo has been successfully deleted" })
+            }).catch((err) => {
+                throw err
+                
+            });
         } catch (error) {
             res.status(error?.code || 500).json(error)
         }
