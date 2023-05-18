@@ -1,5 +1,11 @@
 require('dotenv').config()
 
+const db = new Sequelize(DB_URL, {
+  define: {
+    timestamps: false
+  }
+})
+
 const config = {
     development: {
       username: process.env.DB_USERNAME,
@@ -24,7 +30,8 @@ const config = {
       host: process.env.DB_HOST_PROD,
       dialect: "postgres",
       port: process.env.DB_PORT_PROD
-    }
+    },
+    db
   }
   
   module.exports = config
