@@ -8,7 +8,7 @@
     },
     "test": {
       "username": "postgres",
-      "password": "q6TXhWRBjQEdDekP5O7L,
+      "password": "q6TXhWRBjQEdDekP5O7L",
       "database": "railway_test",
       "host": "containers-us-west-24.railway.app",
       "dialect": "postgres"
