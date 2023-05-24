@@ -1,9 +1,9 @@
 {
     "development": {
       "username": "postgres",
-      "password": "020711",
-      "database": "My_Gram",
-      "host": "localhost",
+      "password": "q6TXhWRBjQEdDekP5O7L",
+      "database": "railway",
+      "host": "containers-us-west-24.railway.app",
       "dialect": "postgres"
     },
     "test": {
